@@ -11,6 +11,7 @@ imageContainer.insertAdjacentHTML('beforeend', getMarkup);
 const origImg = imageContainer.addEventListener('click', selectOriginalImg);
 
 
+
 function createGalleryMarkup(images) {
    
     return images
@@ -35,17 +36,19 @@ function selectOriginalImg(evt) {
     if (evt.target.nodeName !== 'IMG') {
         return
     }
-    
-    openModal(evt.target.dataset.source)
-   console.log(evt.target.dataset.source);
-};
+  
+  const modalRef =
+    basicLightbox.create(`
+		<img width="1400" height="900" src="${evt.target.dataset.source}">
+	`);
+  modalRef.show();
+  window.addEventListener('keydown', evt => {
+    if (evt.code === 'Escape') {
+     modalRef.close()
 
+}
+});
+}
 
-
-function openModal(img) {
-        basicLightbox.create(`
-		<img width="1400" height="900" src="${img}">
-	`).show()
-    }
 
 
