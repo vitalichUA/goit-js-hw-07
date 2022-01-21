@@ -31,24 +31,42 @@ function createGalleryMarkup(images) {
 
 };
 
+
+
 function selectOriginalImg(evt) {
     evt.preventDefault();
     if (evt.target.nodeName !== 'IMG') {
         return
     }
   
-  const modalRef =
-    basicLightbox.create(`
-		<img width="1400" height="900" src="${evt.target.dataset.source}">
-	`);
-  modalRef.show();
-  window.addEventListener('keydown', evt => {
+  const options = {
+onShow: () => {
+window.addEventListener('keydown', evt => {
     if (evt.code === 'Escape') {
      modalRef.close()
 
 }
 });
+},
+onClose: () => { window.removeEventListener('keydown', evt => {
+    if (evt.code === 'Escape') {
+     modalRef.close()
+
 }
+}); },
+};
+
+  
+  const modalRef =
+    basicLightbox.create(`
+		<img width="1400" height="900" src="${evt.target.dataset.source}">
+	`, options);
+  modalRef.show();
+ 
+  
+}
+
+
 
 
 
